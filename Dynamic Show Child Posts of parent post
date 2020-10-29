@@ -1,0 +1,13 @@
+//Dynamic Show Child Posts of parent post
+<?php
+function dynamic_category_query( $query ) {
+  global $post;
+  if ( $query->query['post_type'][0] == 'pumps' ) {
+    $query->set( 'orderby', 'rand' );
+    $query->set( 'post__not_in', array($post->ID) );
+     $query->set( 'post_parent__in', array($post->ID) );
+    $query->set( 'no_found_rows', true );
+  }
+}
+add_action( 'pre_get_posts', 'dynamic_category_query' );
+?>
